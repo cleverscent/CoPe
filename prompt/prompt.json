@@ -1,0 +1,103 @@
+{
+    "movie_tagging":{
+        "system":"You are a movie tag classifier. Your task is to analyze the movie description and output exactly one tag that best describes the movie. Your output must meet the following strict conditions:\n1. The output must be exactly one of the following tags\n2. Do not include any extra text, punctuation, symbols, quotes, or brackets. Only the tag text should be present.\n3. There should be no leading or trailing whitespace, and the output must be a single line.\nFollow these instructions exactly.",
+        "prompt": "Which tag does this movie relate to among the following tags? Just answer with the tag name without further explanation. tags: [sci-fi, based on a book, comedy, action, twist ending, dystopia, dark comedy, classic, psychology, fantasy, romance, thought-provoking, social commentary, violence, true story]\n description: {} tag:",
+        "full_prompt": "Which tag does this movie relate to among the following tags? Just answer with the tag name without further explanation. tags: [sci-fi, based on a book, comedy, action, twist ending, dystopia, dark comedy, classic, psychology, fantasy, romance, thought-provoking, social commentary, violence, true story]\n description: {} tag: {}",
+        "retrieval_history": "description: {description} tag: {tag}\n",
+        "retrieval_query": "Which tag does this movie relate to among the following tags? Just answer with the tag name without further explanation.\n description: {description}",
+        "retrieval_query_wokey": "Which tag does this movie relate to among the following tags? Just answer with the tag name without further explanation.\n description: {}",
+        "OPPU_input": "Which tag does this movie relate to among the following tags? Just answer with the tag name without further explanation. tags: [sci-fi, based on a book, comedy, action, twist ending, dystopia, dark comedy, classic, psychology, fantasy, romance, thought-provoking, social commentary, violence, true story]\n description: {description} tag:",
+        "OPPU_full": "Which tag does this movie relate to among the following tags? Just answer with the tag name without further explanation. tags: [sci-fi, based on a book, comedy, action, twist ending, dystopia, dark comedy, classic, psychology, fantasy, romance, thought-provoking, social commentary, violence, true story]\n description: {description} tag: {tag}"
+    },
+    "citation":{
+        "prompt": "Identify the most relevant reference for the listed publication by the researcher. Select the reference paper that is most closely related to the researcher's work.\npaper title: {} reference:",
+        "full_prompt": "Identify the most relevant reference for the listed publication by the researcher. Select the reference paper that is most closely related to the researcher's work.\npaper title: {} reference: {}",
+        "retrieval_history": "paper title: {title}\n",
+        "retrieval_query": "Identify the most relevant reference for the listed publication by the researcher. Select the reference paper that is most closely related to the researcher's work. Please respond with only the number that corresponds to the reference.\npaper title: {title}",
+        "retrieval_query_wokey": "Identify the most relevant reference for the listed publication by the researcher. Select the reference paper that is most closely related to the researcher's work. Please respond with only the number that corresponds to the reference.\npaper title: {}",
+        "OPPU_input": "paper title: {title} reference:",
+        "OPPU_full": "paper title: {title} reference: {citation}"
+    },
+    "news_categorize":{
+        "system":"You are a news category classifier. Your task is to determine which single category best describes the provided article from the following list\n1) Answer with only one category exactly as it appears in the list.\n2) Do not include any extra words, punctuation, or multiple categories.\n3) Your output must be a single line containing only the category name.",
+        "prompt": "Which category does this article relate to among the following categories? Just answer with the category name without further explanation. categories: [travel, education, parents, style & beauty, entertainment, food & drink, science & technology, business, sports, healthy living, women, politics, crime, culture & arts, religion]\n article: {} category:",
+        "full_prompt": "Which category does this article relate to among the following categories? Just answer with the category name without further explanation. categories: [travel, education, parents, style & beauty, entertainment, food & drink, science & technology, business, sports, healthy living, women, politics, crime, culture & arts, religion]\n article: {} category: {}",
+        "retrieval_history": "article: {text} category: {category}\n",
+        "retrieval_query": "Which category does this article relate to among the following categories? arcicle: {text}",
+        "retrieval_query_wokey": "Which category does this article relate to among the following categories? arcicle: {}",
+        "OPPU_input": "Which category does this article relate to among the following categories? Just answer with the category name without further explanation. categories: [travel, education, parents, style & beauty, entertainment, food & drink, science & technology, business, sports, healthy living, women, politics, crime, culture & arts, religion]\n article: {text} category:",
+        "OPPU_full": "Which category does this article relate to among the following categories? Just answer with the category name without further explanation. categories: [travel, education, parents, style & beauty, entertainment, food & drink, science & technology, business, sports, healthy living, women, politics, crime, culture & arts, religion]\n article: {text} category: {category}"
+    },
+    "product_rating":{
+        "system":"",
+        "prompt": "What is the score of the following review on a scale of 1 to 5? just answer with 1, 2, 3, 4, or 5 without further explanation. review: {}\n score:",
+        "full_prompt": "What is the score of the following review on a scale of 1 to 5? just answer with 1, 2, 3, 4, or 5 without further explanation. review: {}\n score: {}",
+        "retrieval_history": "review: {text} score: {score}\n",
+        "retrieval_query": "What is the score of the following review on a scale of 1 to 5? review: {text}",
+        "retrieval_query_wokey": "What is the score of the following review on a scale of 1 to 5? review: {}",
+        "OPPU_input": "What is the score of the following review on a scale of 1 to 5? just answer with 1, 2, 3, 4, or 5 without further explanation. review: {text}\n score:",
+        "OPPU_full": "What is the score of the following review on a scale of 1 to 5? just answer with 1, 2, 3, 4, or 5 without further explanation. review: {text}\n score: {score}"
+    },
+    "tweet_paraphrase":{
+        "prompt": "Paraphrase the following text into tweet without any explanation before or after it.\n text: {} tweet:",
+        "full_prompt": "Paraphrase the following text into tweet without any explanation before or after it.\n text: {} tweet: {}",
+        "retrieval_history": "tweet: {text}\n",
+        "retrieval_query": "Paraphrase the following text into tweet without any explanation before or after it: {text}",
+        "retrieval_query_wokey": "Paraphrase the following text into tweet without any explanation before or after it: {}",
+        "OPPU_input": "tweet:",
+        "OPPU_full": "tweet: {text}"
+    },
+
+
+
+    "news_headline":{
+        "system": "You are a news headline generator.",
+        "prompt": "Generate a headline for the following article.\narticle: {}\nheadline:",
+        "full_prompt": "Generate a headline for the following article.\narticle:\n{} headline: {}",
+        "retrieval_history": "article: {text} headline: {title}\n",
+        "retrieval_query": "Generate a headline for the following article: {text}",
+        "retrieval_query_wokey": "Generate a headline for the following article: {}",
+        "OPPU_input": "Generate a headline for the following article.\narticle: {text}\nheadline:",
+        "OPPU_full": "Generate a headline for the following article.\narticle: {text}\nheadline: {title}"
+    },
+    "scholarly_title": {
+        "system": "You are a scholarly title generator.",
+        "prompt": "Generate a title for the following abstract of a paper.\n abstract: {} title:",
+        "full_prompt": "Generate a title for the following abstract of a paper.\n abstract: {} title: {}",
+        "retrieval_history": "abstract: {abstract} title: {title}\n",
+        "retrieval_query": "Generate a title for the following abstract of a paper: {abstract}",
+        "retrieval_query_wokey": "Generate a title for the following abstract of a paper: {}",
+        "OPPU_input": "Generate a title for the following abstract of a paper.\n abstract: {abstract} title:",
+        "OPPU_full": "Generate a title for the following abstract of a paper.\n abstract: {abstract} title: {title}"
+    },
+    "abstract_generation": {
+        "system": "You are an abstract writer.",
+        "prompt": "Generate an abstract for the title '{}'.\nAbstract:",
+        "full_prompt": "Generate an abstract for the title '{}'.\nAbstract: {}",
+        "retrieval_history": "title: {title}.\nabstract: {abstract}\n",
+        "retrieval_query": "Generate an abstract for the title '{title}'.",
+        "retrieval_query_wokey": "Generate an abstract for the title '{}'.",
+        "OPPU_input": "Generate an abstract for the title '{title}'.\nAbstract:", 
+        "OPPU_full": "Generate an abstract for the title '{title}'.\nAbstract: {abstract}"
+   },
+   "review_writing": {
+       "system": "You are a review writer.", 
+       "prompt": "Generate the review text written by a reviewer who has a given an overall rating of \"{}\" for a product with description \"{}\". The summary of the review text is \"{}\".\nReview:",
+       "full_prompt": "Generate the review text written by a reviewer who has a given an overall rating of \"{}\" for a product with description \"{}\". The summary of the review text is \"{}\".\nReview: {}",
+       "retrieval_history": "description: {description} overall rating: {overall} summary: {summary}\n",
+       "retrieval_query": "Generate the review text written by a reviewer who has a given an overall rating of \"{overall}\" for a product with description \"{description}\". The summary of the review text is \"{summary}\"",
+       "retrieval_query_wokey": "Generate the review text written by a reviewer who has a given an overall rating of \"{}\" for a product with description \"{}\". The summary of the review text is \"{}\"",
+       "OPPU_input": "Generate a detailed review for a product with the following description: '{description}'. The review has an overall rating of '{overall}'. The review summary is: '{summary}'.\nReview:",
+       "OPPU_full": "Generate a detailed review for a product with the following description: '{description}'. The review has an overall rating of '{overall}'. The review summary is: '{summary}'.\nReview: {reviewText}"
+       },
+   "topic_writing": {
+       "system": "You are a creative content generator for Reddit posts.",
+       "prompt": "Generate the content for a reddit post \npost: {}\ncontent:",
+       "full_prompt":"Generate the content for a reddit post \npost: {}\ncontent: {}", 
+       "retrieval_history": "post:{summary} content: {content}\n",
+       "retrieval_query": "Generate the content for a reddit post {summary}",
+       "retrieval_query_wokey": "Generate the content for a reddit post {}",
+       "OPPU_input": "Generate the content for a reddit post {summary}.\ncontent: ",
+       "OPPU_full": "Generate the content for a reddit post {summary}. \ncontent: {content}"
+   }
+}
