@@ -21,7 +21,7 @@ pip install -r requirements.txt
 
 ## CoPe ## 
 The task_name parameter supports any of the following options:
-[news_headline, scholarly_title, abstract_generation, review_writing, topic_writing]
+```[news_headline, scholarly_title, abstract_generation, review_writing, topic_writing]```
 In this example, we demonstrate using ```news_headline```.
 
 ## Training ##
