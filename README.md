@@ -2,7 +2,7 @@
 
 ## Introduction ## 
 
-We present our new decoding framework for LLM personalization by Contrasting Personal preference (COPE). Our key idea is incorporating implicit reward signals for user preference to guide both training and inference
+We present our new decoding framework for LLM personalization by Contrasting Personal preference (COPE). Our key idea is incorporating implicit reward signals for user preference to guide both training and inference.
 
 ## Dataset ## 
 We utilize publicly available data from the [LaMP](https://arxiv.org/abs/2304.11406) and [LongLaMP](https://arxiv.org/abs/2407.11016) benchmark. And our work is fundamentally based on the [OPPU](https://arxiv.org/abs/2402.04401) setting.
@@ -19,4 +19,11 @@ Next, use your conda environment to install all required packages by running:
 pip install -r requirements.txt
 ```
 
-## 
+## CoPe ## 
+The task_name parameter supports any of the following options:
+[news_headline, scholarly_title, abstract_generation, review_writing, topic_writing]
+In this example, we demonstrate using ```news_headline```.
+
+## Training ##
+
+
