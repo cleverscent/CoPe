@@ -1,4 +1,8 @@
-# Personalized LLM Decoding via Contrasting Personal Preference
+# CoPe: Personalized LLM Decoding via Contrasting Personal Preference
+
+CoPe is a decoding-time personalization framework for large language models (LLMs).  
+It maximizes *implicit user reward* by contrasting personalized (PEFT-tuned) and base models at the token level — enabling personalization without external reward models or extra training.
+
 
 ## Introduction ## 
 
@@ -24,6 +28,52 @@ The task_name parameter supports any of the following options:
 ```[news_headline, scholarly_title, abstract_generation, review_writing, topic_writing]```
 In this example, we demonstrate using ```news_headline```.
 
-## Training ##
+## TAM ##
+
+Task-Adaptive Model (TAM) is trained on data from users excluding the target user, adapting the base model to the overall task domain.
+```bash
+
+```
 
 
+## OPPU ##
+
+
+## Make DPO negative pairs ##
+
+
+## Select best negative pair ##
+
+
+## DPO training ##
+
+
+## Inference with contrastive decoding ## 
+
+
+
+
+## Citation
+If you find this work useful, please cite:
+
+```bibtex
+@inproceedings{bu-etal-2025-personalized,
+    title = "Personalized {LLM} Decoding via Contrasting Personal Preference",
+    author = "Bu, Hyungjune  and
+      Jung, ChanJoo  and
+      Kang, Minjae  and
+      Kim, Jaehyung",
+    editor = "Christodoulopoulos, Christos  and
+      Chakraborty, Tanmoy  and
+      Rose, Carolyn  and
+      Peng, Violet",
+    booktitle = "Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing",
+    month = nov,
+    year = "2025",
+    address = "Suzhou, China",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2025.emnlp-main.1723/",
+    pages = "33946--33966",
+    ISBN = "979-8-89176-332-6"
+}
+```
