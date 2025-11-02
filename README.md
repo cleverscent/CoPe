@@ -9,7 +9,7 @@
   </a>
   <a href="https://aclanthology.org/2025.emnlp-main.1723/" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:#2f2f2f;color:#ffffff;border-radius:9999px;text-decoration:none;font-weight:600;letter-spacing:0.01em;">
     <span style="font-size:1.1rem;">📄</span>
-    <span>EMNLP 2025 Paper</span>
+    <span>Paper</span>
   </a>
 </p>
 
