@@ -1,5 +1,12 @@
 # CoPe: Personalized LLM Decoding via Contrasting Personal Preference
 
+![CoPe teaser](assets/cope_teaser2.png)
+
+<p>
+  <a href="https://naughtymaltiz16.github.io/cope_project_page/" target="_blank" style="display:inline-block;padding:8px 16px;margin-right:8px;background:#1d4ed8;color:#ffffff;border-radius:4px;text-decoration:none;font-weight:600;">Project Page</a>
+  <a href="https://aclanthology.org/2025.emnlp-main.1723/" target="_blank" style="display:inline-block;padding:8px 16px;background:#0f766e;color:#ffffff;border-radius:4px;text-decoration:none;font-weight:600;">EMNLP 2025 Paper</a>
+</p>
+
 CoPe is a decoding-time personalization framework for large language models (LLMs).
 It maximizes implicit user reward by contrasting a personalized model (PEFT/LoRA tuned per user) with the base task-adapted model at token level — enabling personalization without external reward models or extra reward labeling.
 
@@ -17,6 +24,8 @@ This repository provides end-to-end scripts for:
 
 ## Introduction
 We present CoPe, a decoding framework for LLM personalization by Contrasting Personal Preference (CoPe). The key idea is to incorporate implicit reward signals of user preference to guide both training (via DPO on selected negative pairs) and inference (via contrastive decoding that down-weights tokens preferred by the base model but disfavored by the personalized model).
+
+![CoPe overview](assets/cope_overview.png)
 
 
 ## Dataset
