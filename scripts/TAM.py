@@ -7,10 +7,8 @@ from datasets import load_dataset, Dataset
 from tqdm import tqdm
 from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments, Trainer, DataCollatorForSeq2Seq, set_seed
 from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training, PeftModel
-from rank_bm25 import BM25Okapi
 from utils import (
     split_batch,
-    get_first_k_tokens,
     print_trainable_parameters,
     name2taskid,
     extract_news_headline,
@@ -27,7 +25,6 @@ os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"
 parser = argparse.ArgumentParser(description="Parser for TAM")
 parser.add_argument('--model_name', type=str, default='mistralai/Mistral-7B-Instruct-v0.3', help='choose from mistralai/Mistral-7B-Instruct-v0.3, google/gemma-3-4b-it, meta-llama/Llama-3.1-8B-Instruct, Qwen/Qwen2.5-1.5B-Instruct') 
 parser.add_argument('--batch_size', type=int, default=8)
-parser.add_argument('--k', type=int, default=0)
 parser.add_argument('--max_step', type=int, default=5000)
 parser.add_argument('--cut_off', type=int, default=2048)
 parser.add_argument('--max_seq_length', type=int, default=2048)
@@ -35,24 +32,21 @@ parser.add_argument('--max_epoch', type=int, default=3)
 parser.add_argument('--temperature', type=float, default=0.3)
 parser.add_argument('--learning_rate', type=float, default=1e-4)
 parser.add_argument('--task_name', type=str, default='abstract_generation')
-parser.add_argument('--add_profile', action='store_true')
 parser.add_argument('--access_token', type=str, default=None)
 parser.add_argument('--r', type=int, default=16)
 parser.add_argument('--alpha', type=int, default=16)
 parser.add_argument('--repetition_penalty', type=float, default=1.3)
-parser.add_argument('--is_initial_model', action='store_true')
 parser.add_argument('--is_train', action='store_true')
 parser.add_argument('--is_test', action='store_true')
 
 args = parser.parse_args()
 task_name = args.task_name
 batch_size = args.batch_size
-k = args.k
 cutoff_len = args.cut_off
 max_epoch = args.max_epoch
 model_name_short = args.model_name.split('/')[-1]
 
-with open("chat_templates.json", "r") as f:
+with open("./prompt/chat_templates.json", "r") as f:
     CHAT_TEMPLATES = json.load(f)
 with open(f"./data/{args.task_name}/user_others.json", 'r') as f:
     train = json.load(f)
@@ -60,9 +54,6 @@ with open(f"./data/{args.task_name}/user_top_100_history.json", 'r') as f:
     test_data = json.load(f)
 with open('./prompt/prompt.json', 'r') as f:
     prompt_template = json.load(f)
-if args.add_profile:
-    with open(f'./data/{args.task_name}/profile_user_100.json', 'r') as f:
-        test_profile = json.load(f)
 
 if args.task_name == "news_headline":
     extract_article = extract_news_headline
@@ -110,22 +101,6 @@ def create_sft_dataset(train, tokenizer, model_name):
     for i, user in enumerate(train):
         for q in user['query']:
             prompt = q['input']
-            if args.k > 0:
-                if 'profile' in user:
-                    visible_history_list = user['profile']
-                    for p in visible_history_list:
-                        for key, value in p.items():
-                            p[key] = get_first_k_tokens(p[key], 368)
-                    history_list = [
-                        prompt_template[args.task_name]['retrieval_history'].format(**p)
-                        for p in visible_history_list
-                    ]
-                    tokenized_corpus = [doc.split(" ") for doc in history_list]
-                    bm25 = BM25Okapi(tokenized_corpus)
-                    tokenized_query = prompt_template[args.task_name]['retrieval_query_wokey'].format(prompt).split(" ")
-                    retrieved_history = bm25.get_top_n(tokenized_query, history_list, n=args.k)
-                    history_string = "".join(retrieved_history)
-                    prompt = history_string + "\n" + prompt
             chosen = q['gold']
             example = {
                 "prompt": [
@@ -273,44 +248,16 @@ if args.is_test:
     )
     base_model.config.use_cache = False
 
-    if args.is_initial_model:
-        model = base_model
-        tokenizer = AutoTokenizer.from_pretrained(args.model_name, padding_side = "left", token=args.access_token)
-        tokenizer.pad_token = tokenizer.eos_token           # Set PAD token to EOS token
-        tokenizer.pad_token_id = tokenizer.eos_token_id     # Set PAD token ID to EOS token ID
-        # print("EOS token:", tokenizer.eos_token)          # EOS token: </s>
-        # print("EOS token ID:", tokenizer.eos_token_id)    # EOS token ID: 2
-
-        # print("PAD token:", tokenizer.pad_token)          # PAD token: None
-        # print("PAD token ID:", tokenizer.pad_token_id)    # PAD token ID: None
-        
-        # print("BOS token:", tokenizer.bos_token)          # BOS token: <s>
-        # print("BOS token ID:", tokenizer.bos_token_id)    # BOS token ID: 1
-    else:
-        adapter_path = f"./ckpt/TAM/{args.task_name}/TAM-{model_name_short}_ckpt"
-        tokenizer = AutoTokenizer.from_pretrained(adapter_path, padding_side = "left", token=args.access_token)
-        model = PeftModel.from_pretrained(model=base_model, model_id=adapter_path, is_trainable=False)
-        model = model.merge_and_unload()
+    adapter_path = f"./ckpt/TAM/{args.task_name}/TAM-{model_name_short}_ckpt"
+    tokenizer = AutoTokenizer.from_pretrained(adapter_path, padding_side = "left", token=args.access_token)
+    model = PeftModel.from_pretrained(model=base_model, model_id=adapter_path, is_trainable=False)
+    model = model.merge_and_unload()
 
     pred_all = []
 
     for i in tqdm(range(len(test_data)), desc="Testing Users"):
         expert_model = model
         expert_model.eval()
-
-        if args.add_profile:
-            profile = test_profile[i]['output']
-        else:
-            profile = None
-        if k > 0:
-            visible_history_list = test_data[i]['profile']
-            for p in visible_history_list:
-                for key, value in p.items():
-                    # p[key] = get_first_k_tokens(p[key], 368)
-                    p[key] = get_first_k_tokens(str(p[key]), 368)
-            history_list = [prompt_template[args.task_name]['retrieval_history'].format(**p) for p in visible_history_list]
-            tokenized_corpus = [doc.split(" ") for doc in history_list]
-            bm25 = BM25Okapi(tokenized_corpus)
 
         test_question_list = []
         question_id_list = []
@@ -324,17 +271,6 @@ if args.is_test:
                 test_question = q['input']
                 test_article = extract_article(test_question)
                 test_prompt = prompt_template[args.task_name]['prompt'].format(test_article)
-
-            if k > 0:
-                if args.task_name == 'review_writing':
-                    tokenized_query = prompt_template[args.task_name]['retrieval_query_wokey'].format(*test_article).split(" ")
-                else:
-                    tokenized_query = prompt_template[args.task_name]['retrieval_query_wokey'].format(test_question).split(" ")
-                retrieved_history = bm25.get_top_n(tokenized_query, history_list, n=args.k)
-                history_string = "".join(retrieved_history)
-                test_prompt = history_string + "\n" + test_prompt
-            if args.add_profile:
-                test_prompt = profile + "\n" + test_prompt
 
             chat_messages = [{"role": "system", "content": SYSTEM_PROMPT}, {"role": "user", "content": test_prompt}]
             formatted_prompt = tokenizer.apply_chat_template(chat_messages, tokenize=False)
@@ -380,11 +316,7 @@ if args.is_test:
         'model': args.model_name,
     }
 
-    file_suffix = "-profile" if args.add_profile else ""
-    file_suffix += "-initial" if args.is_initial_model else ""
-    file_suffix += "-RAG" if args.k > 0 else ""
-    file_suffix += "-PAG" if args.add_profile else ""
-    file_path = f"./output/{args.task_name}/TAM-{model_name_short}-k{args.k}-rp{repetition_penalty}{file_suffix}.json"
+    file_path = f"./output/{args.task_name}/TAM-{model_name_short}-rp{repetition_penalty}.json"
 
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open(file_path, 'w') as f:

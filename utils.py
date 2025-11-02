@@ -202,38 +202,7 @@ def print_trainable_parameters(model):
         f"trainable params: {trainable_params} || all params: {all_param} || trainable%: {100 * trainable_params / all_param}"
     )
 
-# def get_output(output, args):
-#     if args.task_name == "news_headline":
-#         headline_start = output.rfind("headline:")
-#         if headline_start != -1:  
-#             result = output[headline_start + len("headline:"):].strip() 
-#         else:
-#             result = "" 
-#     elif args.task_name == "scholarly_title":
-#         title_start = output.rfind("title:")
-#         if title_start != -1: 
-#             result = output[title_start+ len("title:"):].strip()
-#         else:
-#             result = ""
-#     elif args.task_name == "abstract_generation":
-#         abstract_start = output.rfind("Abstract:")
-#         if abstract_start != -1:
-#             result = output[abstract_start + len("Abstract:"):].strip()
-#         else:
-#             result = ""
-#     elif args.task_name == "review_writing":
-#         review_start = output.rfind("Review:")
-#         if review_start != -1:
-#             result = output[review_start + len("Review:"):].strip()
-#         else:
-#             result = ""
-#     elif args.task_name == "topic_writing":
-#         post_start = output.rfind("content:")
-#         if post_start != -1:
-#             result = output[post_start + len("content:"):].strip()
-#         else:
-#             result = ""
-#     return result
+
 
 def get_output(output, args):
     model_name = args.model_name.lower()
