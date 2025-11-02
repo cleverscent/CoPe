@@ -13,10 +13,6 @@
   </a>
 </p>
 
-<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:16px;">
-  <img src="assets/emnlp_2025_logo_v1.png" alt="EMNLP 2025" style="height:64px;">
-</div>
-
 CoPe is a decoding-time personalization framework for large language models (LLMs).
 It maximizes implicit user reward by contrasting a personalized model (PEFT/LoRA tuned per user) with the base task-adapted model at token level — enabling personalization without external reward models or extra reward labeling.
 
