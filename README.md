@@ -1,11 +1,21 @@
-# CoPe: Personalized LLM Decoding via Contrasting Personal Preference
+# Personalized LLM Decoding via <u>Co</u>ntrasting <u>Pe</u>rsonal Preference
 
 ![CoPe teaser](assets/cope_teaser2.png)
 
-<p>
-  <a href="https://naughtymaltiz16.github.io/cope_project_page/" target="_blank" style="display:inline-block;padding:8px 16px;margin-right:8px;background:#1d4ed8;color:#ffffff;border-radius:4px;text-decoration:none;font-weight:600;">Project Page</a>
-  <a href="https://aclanthology.org/2025.emnlp-main.1723/" target="_blank" style="display:inline-block;padding:8px 16px;background:#0f766e;color:#ffffff;border-radius:4px;text-decoration:none;font-weight:600;">EMNLP 2025 Paper</a>
+<p style="display:flex;gap:12px;flex-wrap:wrap;margin:16px 0;">
+  <a href="https://naughtymaltiz16.github.io/cope_project_page/" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:#2f2f2f;color:#ffffff;border-radius:9999px;text-decoration:none;font-weight:600;letter-spacing:0.01em;">
+    <span style="font-size:1.1rem;">💻</span>
+    <span>Project Page</span>
+  </a>
+  <a href="https://aclanthology.org/2025.emnlp-main.1723/" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:#2f2f2f;color:#ffffff;border-radius:9999px;text-decoration:none;font-weight:600;letter-spacing:0.01em;">
+    <span style="font-size:1.1rem;">📄</span>
+    <span>EMNLP 2025 Paper</span>
+  </a>
 </p>
+
+<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:16px;">
+  <img src="assets/emnlp_2025_logo_v1.png" alt="EMNLP 2025" style="height:64px;">
+</div>
 
 CoPe is a decoding-time personalization framework for large language models (LLMs).
 It maximizes implicit user reward by contrasting a personalized model (PEFT/LoRA tuned per user) with the base task-adapted model at token level — enabling personalization without external reward models or extra reward labeling.
