@@ -6,16 +6,19 @@
 
 ![CoPe teaser](assets/cope_teaser2.png)
 
-<p style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:16px 0;">
-  <a href="https://naughtymaltiz16.github.io/cope_project_page/" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:#2f2f2f;color:#ffffff;border-radius:9999px;text-decoration:none;font-weight:600;letter-spacing:0.01em;">
+<div align="center">
+<p style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin:16px 0;width:100%;">
+  <a href="https://naughtymaltiz16.github.io/cope_project_page/" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:#2f2f2f;color:#ffffff;border-radius:9999px;text-decoration:none;font-weight:bold;letter-spacing:0.01em;">
     <span style="font-size:1.1rem;">💻</span>
     <span style="font-weight:bold;"> Project Page </span>
   </a>
-  <a href="https://aclanthology.org/2025.emnlp-main.1723/" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:#2f2f2f;color:#ffffff;border-radius:9999px;text-decoration:none;font-weight:600;letter-spacing:0.01em;">
+  <span style="width:1px;height:24px;background:#666666;margin:0 8px;"></span>
+  <a href="https://aclanthology.org/2025.emnlp-main.1723/" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:#2f2f2f;color:#ffffff;border-radius:9999px;text-decoration:none;font-weight:bold;letter-spacing:0.01em;">
     <span style="font-size:1.1rem;">📄</span>
     <span style="font-weight:bold;"> Paper </span>
   </a>
 </p>
+</div>
 
 CoPe is a decoding-time personalization framework for large language models (LLMs).
 It maximizes implicit user reward by contrasting a personalized model (PEFT/LoRA tuned per user) with the base task-adapted model at token level — enabling personalization without external reward models or extra reward labeling.
